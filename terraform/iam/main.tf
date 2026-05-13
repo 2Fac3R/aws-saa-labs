@@ -14,6 +14,14 @@ resource "aws_s3_bucket" "data_bucket" {
   force_destroy = true
 }
 
+# --- S3 Object Deployment (Architect Way) ---
+resource "aws_s3_object" "validation_script" {
+  bucket = aws_s3_bucket.data_bucket.id
+  key    = "scripts/s3_check.py"
+  source = "../../apps/validation/s3_check.py"
+  etag   = filemd5("../../apps/validation/s3_check.py")
+}
+
 # --- IAM Role for EC2 ---
 resource "aws_iam_role" "ec2_s3_access_role" {
   name = "ec2-s3-access-role"
@@ -93,16 +101,22 @@ resource "aws_instance" "lab_ec2" {
   instance_type        = "t3.micro"
   iam_instance_profile = aws_iam_instance_profile.ec2_profile.name
 
-  # Note: Launching in default VPC for this lab
-  # Security group allowing SSH is recommended but not strictly required for IAM validation via User Data
-
   tags = {
     Name = "Lab-1-IAM-EC2"
   }
 
-  user_data = <<-EOF
+  user_data = <<-EOD
               #!/bin/bash
-              dnf install -y python3-pip
+              # Update and install dependencies
+              dnf update -y
+              dnf install -y python3-pip aws-cli
+              
+              # Install Boto3
               pip3 install boto3
-              EOF
+              
+              # Create directory and FETCH validation script from S3
+              mkdir -p /home/ec2-user/scripts
+              aws s3 cp s3://${aws_s3_bucket.data_bucket.id}/scripts/s3_check.py /home/ec2-user/scripts/s3_check.py
+              chown ec2-user:ec2-user /home/ec2-user/scripts/s3_check.py
+              EOD
 }
