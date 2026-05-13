@@ -1,0 +1,71 @@
+direction: down
+
+VPC: lab-vpc {
+  style: {
+    stroke: "#333333"
+    stroke-width: 2
+  }
+
+  IGW: Internet Gateway {
+    style: {
+      stroke: "#FF9900"
+    }
+  }
+
+  S3Endpoint: S3 Gateway Endpoint {
+    style: {
+      stroke: "#3F7E44"
+    }
+  }
+
+  AZ_A: Availability Zone A {
+    PublicSubnet1: Public Subnet 1 {
+      NAT: NAT Gateway {
+        style: {
+          stroke: "#FF9900"
+        }
+      }
+      style: {
+        stroke: "#0073BB"
+      }
+    }
+    PrivateSubnet1: Private Subnet 1 {
+      style: {
+        stroke: "#3F7E44"
+      }
+    }
+  }
+
+  AZ_B: Availability Zone B {
+    PublicSubnet2: Public Subnet 2 {
+      style: {
+        stroke: "#0073BB"
+      }
+    }
+    PrivateSubnet2: Private Subnet 2 {
+      style: {
+        stroke: "#3F7E44"
+      }
+    }
+  }
+
+  # Connectivity
+  AZ_A.PublicSubnet1 -> IGW: internet access
+  AZ_B.PublicSubnet2 -> IGW
+
+  AZ_A.PrivateSubnet1 -> AZ_A.PublicSubnet1.NAT: outbound traffic
+  AZ_B.PrivateSubnet2 -> AZ_A.PublicSubnet1.NAT
+  AZ_A.PublicSubnet1.NAT -> IGW
+
+  AZ_A.PrivateSubnet1 -> S3Endpoint: private access
+  AZ_B.PrivateSubnet2 -> S3Endpoint
+}
+
+S3: Amazon S3 {
+  shape: cylinder
+  style: {
+    stroke: "#3F7E44"
+  }
+}
+
+VPC.S3Endpoint -> S3: direct backbone traffic
