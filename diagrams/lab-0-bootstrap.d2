@@ -1,0 +1,23 @@
+direction: right
+
+TerraformCLI: Terraform CLI {
+  shape: person
+}
+
+Cloud: AWS {
+  S3: tfstate-bucket {
+    shape: cylinder
+    style: {
+      stroke: "#3F7E44"
+    }
+  }
+
+  DynamoDB: lock-table {
+    style: {
+      stroke: "#C44536"
+    }
+  }
+}
+
+TerraformCLI -> Cloud.S3: stores state
+TerraformCLI -> Cloud.DynamoDB: manages locks
