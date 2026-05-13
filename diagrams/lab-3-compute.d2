@@ -1,0 +1,33 @@
+direction: right
+
+VPC: lab-vpc {
+  PublicSubnet: Public Subnet {
+    EC2: Web Server {
+      style: {
+        stroke: "#FF9900"
+      }
+    }
+    EIP: Elastic IP {
+      style: {
+        stroke: "#FF9900"
+        stroke-dash: 5
+      }
+    }
+    SG: Security Group {
+      label: "Allow 80, 443"
+    }
+  }
+
+  LT: Launch Template {
+    label: "Blueprint (AL2023, UserData)"
+  }
+}
+
+User: External User {
+  shape: person
+}
+
+User -> VPC.PublicSubnet.EIP: http (80)
+VPC.PublicSubnet.EIP -> VPC.PublicSubnet.EC2
+VPC.PublicSubnet.EC2 -> VPC.PublicSubnet.SG: enforced by
+VPC.LT -> VPC.PublicSubnet.EC2: defines
