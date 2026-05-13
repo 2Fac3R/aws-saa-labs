@@ -1,0 +1,31 @@
+direction: right
+
+EC2: Lab-1-IAM-EC2 {
+  style: {
+    stroke: "#FF9900"
+  }
+}
+
+IAM: {
+  InstanceProfile: ec2-s3-access-profile
+  Role: ec2-s3-access-role
+  Policy: S3ReadOnlyAccessToLabBucket
+  
+  InstanceProfile -> Role
+  Role -> Policy
+  
+  style: {
+    stroke: "#FF4F8B"
+  }
+}
+
+S3: aws-saa-labs-data-bucket {
+  shape: cylinder
+  style: {
+    stroke: "#3F7E44"
+  }
+}
+
+EC2 -> IAM.InstanceProfile: assumes
+IAM.Policy -> S3: grants read access
+EC2 -> S3: reads data

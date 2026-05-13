@@ -4,17 +4,7 @@
 Demonstrate how to provide secure, credential-less access to AWS services from an EC2 instance using IAM Roles and Instance Profiles.
 
 ## Architecture
-```text
-[ EC2 Instance ]
-      |
-      | (Assumes Role via Instance Profile)
-      v
-[ IAM Role: ec2-s3-access-role ]
-      |
-      | (Policy: S3ReadOnlyAccessToLabBucket)
-      v
-[ S3 Bucket: aws-saa-labs-data-<account-id> ]
-```
+![Lab 1 Architecture](../diagrams/lab-1-iam.svg)
 
 ## Key Concepts
 ### 1. Trust Relationship (AssumeRolePolicy)
