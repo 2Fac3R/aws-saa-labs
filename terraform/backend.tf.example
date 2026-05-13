@@ -1,0 +1,12 @@
+# Copy this file to each module directory (e.g., terraform/networking/backend.tf)
+# and update the 'key' to be unique for that module.
+
+terraform {
+  backend "s3" {
+    bucket         = "aws-saa-labs-tfstate-444386042261-us-east-1"
+    key            = "CHANGE_ME/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "aws-saa-labs-tfstate-locks"
+    encrypt        = true
+  }
+}
