@@ -21,6 +21,15 @@ data "terraform_remote_state" "iam" {
   }
 }
 
+# --- S3 App Deployment ---
+# Using the bucket created in Lab 1
+resource "aws_s3_object" "app_code" {
+  bucket = data.terraform_remote_state.iam.outputs.s3_bucket_name
+  key    = "app/main.py"
+  source = "../../apps/fastapi-monolith/main.py"
+  etag   = filemd5("../../apps/fastapi-monolith/main.py")
+}
+
 # --- Security Group ---
 resource "aws_security_group" "web_sg" {
   name        = "lab-web-sg"
@@ -68,33 +77,19 @@ resource "aws_launch_template" "web" {
 
   vpc_security_group_ids = [aws_security_group.web_sg.id]
 
-  # SAA Exam Topic: User Data for Bootstrapping
+  # SAA Architect Way: Fetch from S3 using IAM Role
   user_data = base64encode(<<-EOF
               #!/bin/bash
               # Update and install dependencies
               dnf update -y
-              dnf install -y python3-pip git
+              dnf install -y python3-pip git aws-cli
               
               # Install FastAPI and Uvicorn
-              pip3 install fastapi uvicorn
+              pip3 install fastapi uvicorn boto3
               
-              # Create app directory and file
+              # Create app directory and FETCH code from S3
               mkdir -p /app
-              cat <<APP > /app/main.py
-              from fastapi import FastAPI
-              import socket
-
-              app = FastAPI()
-
-              @app.get("/")
-              def read_root():
-                  return {
-                      "status": "online",
-                      "hostname": socket.gethostname(),
-                      "message": "Hello from AWS SAA Lab 3 (Bootstrapped)!",
-                      "architecture": "EC2 Monolith"
-                  }
-              APP
+              aws s3 cp s3://${data.terraform_remote_state.iam.outputs.s3_bucket_name}/app/main.py /app/main.py
 
               # Start the application
               cd /app
