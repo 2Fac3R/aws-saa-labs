@@ -5,7 +5,8 @@ In this project, we intentionally split our infrastructure into discrete, indepe
 - `terraform/bootstrap`: The foundation (S3/DynamoDB for state).
 - `terraform/networking`: The virtual data center (VPC, Subnets, Gateways).
 - `terraform/iam`: Identity and access management.
-- `terraform/compute`: Servers and application logic.
+- `terraform/compute`: Initial compute experiments.
+- `terraform/asg-alb`: Highly available, auto-scaling compute.
 
 ## Why Decouple?
 

@@ -1,0 +1,55 @@
+direction: down
+
+User: External User {
+  shape: person
+}
+
+Cloud: AWS {
+  VPC: lab-vpc {
+    ALB: Application Load Balancer {
+      style: {
+        stroke: "#FF9900"
+        stroke-width: 2
+      }
+    }
+
+    AZ_A: Availability Zone A {
+      PublicSubnetA: Public Subnet {
+        style: { stroke: "#0073BB" }
+      }
+      PrivateSubnetA: Private Subnet {
+        EC2_A: ASG Instance {
+          style: { stroke: "#FF9900" }
+        }
+        style: { stroke: "#3F7E44" }
+      }
+    }
+
+    AZ_B: Availability Zone B {
+      PublicSubnetB: Public Subnet {
+        style: { stroke: "#0073BB" }
+      }
+      PrivateSubnetB: Private Subnet {
+        EC2_B: ASG Instance {
+          style: { stroke: "#FF9900" }
+        }
+        style: { stroke: "#3F7E44" }
+      }
+    }
+  }
+
+  S3: App Repository {
+    shape: cylinder
+    style: { stroke: "#3F7E44" }
+  }
+}
+
+User -> Cloud.VPC.ALB: HTTP (80)
+Cloud.VPC.ALB -> Cloud.VPC.AZ_A.PrivateSubnetA.EC2_A: Forward
+Cloud.VPC.ALB -> Cloud.VPC.AZ_B.PrivateSubnetB.EC2_B: Forward
+
+Cloud.VPC.AZ_A.PrivateSubnetA.EC2_A -> Cloud.S3: Fetch Code
+Cloud.VPC.AZ_B.PrivateSubnetB.EC2_B -> Cloud.S3: Fetch Code
+
+Cloud.VPC.ALB -> Cloud.VPC.AZ_A.PublicSubnetA: resides in
+Cloud.VPC.ALB -> Cloud.VPC.AZ_B.PublicSubnetB: resides in
