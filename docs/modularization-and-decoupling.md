@@ -7,6 +7,7 @@ In this project, we intentionally split our infrastructure into discrete, indepe
 - `terraform/iam`: Identity and access management.
 - `terraform/compute`: Initial compute experiments.
 - `terraform/asg-alb`: Highly available, auto-scaling compute.
+- `terraform/storage`: Centralized assets and CDN delivery.
 
 ## Why Decouple?
 

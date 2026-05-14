@@ -1,0 +1,28 @@
+direction: right
+
+User: External User {
+  shape: person
+}
+
+Cloud: AWS {
+  CloudFront: Amazon CloudFront {
+    OAC: Origin Access Control {
+      style: { stroke: "#FF4F8B" }
+    }
+    style: { stroke: "#FF9900"; stroke-width: 2 }
+  }
+
+  S3: Private Assets Bucket {
+    shape: cylinder
+    style: { stroke: "#3F7E44" }
+    
+    Lifecycle: Lifecycle Rules {
+      label: "Standard-IA (30d)\nGlacier (60d)"
+    }
+  }
+}
+
+User -> Cloud.CloudFront: HTTPS Request
+Cloud.CloudFront.OAC -> Cloud.S3: Signed Request (SigV4)
+Cloud.S3 -> Cloud.CloudFront: Returns Object
+Cloud.CloudFront -> User: Delivers Content
