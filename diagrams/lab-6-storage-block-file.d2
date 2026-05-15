@@ -1,0 +1,28 @@
+direction: right
+
+EBS_Lab: Block Storage Lab {
+  EC2: Lab-3 Instance
+  EBS: Secondary Volume {
+    label: "Dedicated Storage\nManual Snapshot"
+  }
+  EC2 -> EBS: Attachment
+}
+
+EFS_Lab: File Storage Lab {
+  ASG: Auto Scaling Group {
+    I1: Instance 1
+    I2: Instance 2
+  }
+  EFS: Shared Drive {
+    shape: cylinder
+  }
+  ASG.I1 -> EFS: mount
+  ASG.I2 -> EFS: mount
+}
+
+User: Architect {
+  shape: person
+}
+
+User -> EBS_Lab: Volume Surgery
+User -> EFS_Lab: Concurrent Access Check

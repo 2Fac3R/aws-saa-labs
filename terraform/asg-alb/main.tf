@@ -21,6 +21,16 @@ data "terraform_remote_state" "iam" {
   }
 }
 
+# Lookup EFS if it exists (allows decoupling)
+data "terraform_remote_state" "efs" {
+  backend = "s3"
+  config = {
+    bucket = "aws-saa-labs-tfstate-444386042261-us-east-1"
+    key    = "storage-efs/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 # --- S3 App Deployment ---
 resource "aws_s3_object" "app_code" {
   bucket = data.terraform_remote_state.iam.outputs.s3_bucket_name
@@ -30,7 +40,6 @@ resource "aws_s3_object" "app_code" {
 }
 
 # --- Security Groups ---
-# ALB Security Group (Public)
 resource "aws_security_group" "alb_sg" {
   name        = "lab-alb-sg"
   description = "Allow HTTP from anywhere"
@@ -53,7 +62,6 @@ resource "aws_security_group" "alb_sg" {
   tags = { Name = "lab-alb-sg" }
 }
 
-# Instance Security Group (Private)
 resource "aws_security_group" "asg_sg" {
   name        = "lab-asg-sg"
   description = "Allow HTTP only from ALB"
@@ -132,16 +140,22 @@ resource "aws_launch_template" "asg" {
 
   vpc_security_group_ids = [aws_security_group.asg_sg.id]
 
-  user_data = base64encode(<<-EOF
+  user_data = base64encode(<<-EOD
               #!/bin/bash
               dnf update -y
-              dnf install -y python3-pip aws-cli
+              dnf install -y python3-pip aws-cli amazon-efs-utils
               pip3 install fastapi uvicorn boto3
+              
+              # Mount EFS Shared Drive
+              mkdir -p /var/www/shared
+              mount -t efs -o tls ${try(data.terraform_remote_state.efs.outputs.efs_id, "NONE")}:/ /var/www/shared
+
+              # App Setup
               mkdir -p /app
               aws s3 cp s3://${data.terraform_remote_state.iam.outputs.s3_bucket_name}/app-v2/main.py /app/main.py
               cd /app
               nohup uvicorn main:app --host 0.0.0.0 --port 80 > /var/log/app.log 2>&1 &
-              EOF
+              EOD
   )
 
   tag_specifications {

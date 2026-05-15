@@ -8,6 +8,7 @@ In this project, we intentionally split our infrastructure into discrete, indepe
 - `terraform/compute`: Initial compute experiments.
 - `terraform/asg-alb`: Highly available, auto-scaling compute.
 - `terraform/storage`: Centralized assets and CDN delivery.
+- `terraform/storage-efs`: Shared POSIX filesystem for clusters.
 
 ## Why Decouple?
 
