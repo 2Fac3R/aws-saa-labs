@@ -1,0 +1,37 @@
+direction: right
+
+Application: Application Cluster {
+  style: { stroke: "#FF9900" }
+}
+
+Cloud: AWS {
+  DynamoDB: lab-orders-table {
+    shape: cylinder
+    style: { stroke: "#3F7E44"; stroke-width: 2 }
+
+    PK: Partition Key (PK) {
+      label: "USER#123"
+    }
+    SK: Sort Key (SK) {
+      label: "ORDER#456"
+    }
+    
+    GSI: StatusIndex {
+      label: "Query by Status\nacross all users"
+      style: { stroke-dash: 5 }
+    }
+
+    TTL: Time To Live {
+      label: "Auto-delete\nexpired items"
+    }
+  }
+}
+
+Application -> Cloud.DynamoDB: putItem / query (HTTPS)
+Cloud.DynamoDB.PK -> Cloud.DynamoDB.SK: Hierarchical relation
+
+User: Architect {
+  shape: person
+}
+
+User -> Cloud.DynamoDB: Defines Schema
