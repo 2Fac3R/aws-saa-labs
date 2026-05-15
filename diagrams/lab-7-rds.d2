@@ -1,0 +1,34 @@
+direction: right
+
+VPC: lab-vpc {
+  PrivateSubnetA: {
+    RDS_Primary: RDS (Primary) {
+      style: { stroke: "#C44536"; stroke-width: 2 }
+    }
+  }
+  PrivateSubnetB: {
+    RDS_Standby: RDS (Standby) {
+      style: { stroke: "#333333"; stroke-dash: 5 }
+    }
+  }
+  
+  RDS_Primary -> RDS_Standby: Synchronous Replication
+}
+
+SecretsManager: AWS Secrets Manager {
+  label: "DB Credentials"
+  style: { stroke: "#FF4F8B" }
+}
+
+App_Cluster: Application Cluster {
+  style: { stroke: "#FF9900" }
+}
+
+App_Cluster -> SecretsManager: Get Credentials
+App_Cluster -> VPC.RDS_Primary: Connect (5432)
+
+User: Architect {
+  shape: person
+}
+
+User -> SecretsManager: Setup

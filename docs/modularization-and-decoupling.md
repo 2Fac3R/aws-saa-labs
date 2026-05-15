@@ -9,6 +9,7 @@ In this project, we intentionally split our infrastructure into discrete, indepe
 - `terraform/asg-alb`: Highly available, auto-scaling compute.
 - `terraform/storage`: Centralized assets and CDN delivery.
 - `terraform/storage-efs`: Shared POSIX filesystem for clusters.
+- `terraform/databases-rds`: Managed relational database (PostgreSQL).
 
 ## Why Decouple?
 
