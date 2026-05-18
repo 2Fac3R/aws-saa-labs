@@ -1,0 +1,53 @@
+direction: right
+
+GitHub: GitHub Actions {
+  shape: person
+  label: "Repo: 2Fac3R/software-eng-lab"
+}
+
+User: End User {
+  shape: person
+}
+
+Cloud: AWS {
+  IAM: Identity & Access {
+    OIDC: GitHub OIDC Provider
+    Role: GitHubActionsRole {
+      label: "Assumed by GitHub"
+    }
+    OIDC -> Role: trust
+  }
+
+  ECR: ECR Repository {
+    shape: cylinder
+    label: "engineering-mastery-lab"
+  }
+
+  VPC: lab-vpc {
+    ALB: Application Load Balancer {
+      style: { stroke: "#FF9900"; stroke-width: 2 }
+    }
+
+    PrivateSubnet: {
+      ECS: ECS Cluster {
+        Service: Fargate Service {
+          Task: Running Task (Port 8000)
+        }
+      }
+    }
+  }
+
+  CW: CloudWatch Logs {
+    label: "/ecs/mastery-lab"
+  }
+}
+
+GitHub -> Cloud.IAM.Role: AssumeRole (OIDC)
+GitHub -> Cloud.ECR: Push Image
+GitHub -> Cloud.VPC.PrivateSubnet.ECS.Service: Update Service
+
+User -> Cloud.VPC.ALB: HTTP (80)
+Cloud.VPC.ALB -> Cloud.VPC.PrivateSubnet.ECS.Service.Task: Forward (8000)
+
+Cloud.VPC.PrivateSubnet.ECS.Service.Task -> Cloud.ECR: Pulls Image
+Cloud.VPC.PrivateSubnet.ECS.Service.Task -> Cloud.CW: Streams Logs

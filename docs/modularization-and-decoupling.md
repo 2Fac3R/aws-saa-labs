@@ -11,6 +11,7 @@ In this project, we intentionally split our infrastructure into discrete, indepe
 - `terraform/storage-efs`: Shared POSIX filesystem for clusters.
 - `terraform/databases-rds`: Managed relational database (PostgreSQL).
 - `terraform/databases-dynamodb`: Serverless NoSQL database.
+- `terraform/ecs-fargate-ci`: Container orchestration and CI/CD foundation.
 
 ## Why Decouple?
 
