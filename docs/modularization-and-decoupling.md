@@ -11,6 +11,7 @@ In this project, we intentionally split our infrastructure into discrete, indepe
 - `terraform/storage-efs`: Shared POSIX filesystem for clusters.
 - `terraform/databases-rds`: Managed relational database (PostgreSQL).
 - `terraform/databases-dynamodb`: Serverless NoSQL database.
+- `terraform/serverless-api`: Serverless compute and REST API Gateway.
 - `terraform/ecs-fargate-ci`: Container orchestration and CI/CD foundation.
 
 ## Why Decouple?
@@ -46,6 +47,15 @@ resource "aws_instance" "web" {
   subnet_id = data.terraform_remote_state.networking.outputs.public_subnet_ids[0]
 }
 ```
+
+## Connectivity & Optimization: VPC Endpoints
+While modules are decoupled, they share a highly optimized networking backbone.
+
+### S3 Gateway Endpoint
+In `terraform/networking`, we provision a **VPC Gateway Endpoint for S3**. This architectural decision provides immediate benefits to **every other module** in the project:
+1. **Cost Efficiency:** Any module fetching code from S3 (Labs 1, 3, 4, 9, 10) does so for free. Traffic bypasses the NAT Gateway, avoiding data processing charges.
+2. **Security:** Data transfer remains entirely within the AWS private network. Traffic never traverses the public internet.
+3. **Performance:** Direct connectivity to S3 results in faster bootstrapping for EC2 and Fargate tasks.
 
 ## SAA Exam Relevance: "Loosely Coupled"
 A core tenet of the AWS Well-Architected Framework is **Loose Coupling**. By breaking your infrastructure into layers, you can scale, secure, and evolve each part independently.

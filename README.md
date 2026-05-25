@@ -27,20 +27,20 @@ Defined in [GEMINI.md](./GEMINI.md), these principles guide every laboratory:
 - [x] **2. Networking** - VPC, Subnets, Gateways, and VPC Endpoints (Gateway & Interface).
 
 ### Phase 2: Compute & Traffic Management
-- [ ] **3. EC2** - Launch Templates, User Data bootstrapping, and FastAPI deployment.
-- [ ] **4. HA & Routing** - ALB, Auto Scaling Groups (ASG), and Route 53 Routing Policies.
+- [x] **3. EC2** - Launch Templates, User Data bootstrapping, and FastAPI deployment.
+- [x] **4. HA & Routing** - ALB, Auto Scaling Groups (ASG), and Route 53 Routing Policies.
 
 ### Phase 3: Storage & Content Delivery
-- [ ] **5. S3 & CloudFront** - Lifecycle rules, Replication, and OAC (Origin Access Control).
-- [ ] **6. EBS & EFS** - Block vs. File storage with multi-instance shared access.
+- [x] **5. S3 & CloudFront** - Lifecycle rules, Replication, and OAC (Origin Access Control).
+- [x] **6. EBS & EFS** - Block vs. File storage with multi-instance shared access.
 
 ### Phase 4: Databases
-- [ ] **7. RDS & Aurora** - Multi-AZ, Read Replicas, and failover behavior.
-- [ ] **8. DynamoDB** - NoSQL modeling, GSIs, and TTL configurations.
+- [x] **7. RDS & Aurora** - Multi-AZ, Read Replicas, and failover behavior.
+- [x] **8. DynamoDB** - NoSQL modeling, GSIs, and TTL configurations.
 
 ### Phase 5: Serverless & Containers
-- [ ] **9. Lambda & API Gateway** - Event-driven processing and serverless APIs.
-- [ ] **10. ECS Fargate** - Managed container orchestration for microservices.
+- [x] **9. Lambda & API Gateway** - Event-driven processing and serverless APIs.
+- [x] **10. ECS Fargate** - Managed container orchestration and GitHub CI/CD pipeline.
 
 ### Phase 6: Messaging & Integration
 - [ ] **11. SQS** - Standard vs. FIFO queues, DLQs, and visibility timeouts.

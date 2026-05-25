@@ -1,0 +1,28 @@
+direction: right
+
+User: Client {
+  shape: person
+}
+
+Cloud: AWS {
+  APIGW: API Gateway {
+    label: "/orders (POST)"
+    style: { stroke: "#FF4F8B" }
+  }
+
+  Lambda: Lambda Function {
+    label: "Order Processor\n(Python)"
+    style: { stroke: "#FF9900"; stroke-width: 2 }
+  }
+
+  DynamoDB: DynamoDB Table {
+    shape: cylinder
+    style: { stroke: "#3F7E44" }
+  }
+}
+
+User -> Cloud.APIGW: POST JSON
+Cloud.APIGW -> Cloud.Lambda: Triggers (Proxy)
+Cloud.Lambda -> Cloud.DynamoDB: putItem (IAM Role)
+
+User -> Cloud.Lambda: logs via CloudWatch
