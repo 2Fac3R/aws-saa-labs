@@ -57,5 +57,16 @@ In `terraform/networking`, we provision a **VPC Gateway Endpoint for S3**. This 
 2. **Security:** Data transfer remains entirely within the AWS private network. Traffic never traverses the public internet.
 3. **Performance:** Direct connectivity to S3 results in faster bootstrapping for EC2 and Fargate tasks.
 
+## Architectural Lessons: The Dependency Trap
+Modularization is powerful but introduces the risk of **Circular Dependencies**. 
+
+### The Challenge (Lab 6 Case Study)
+In Lab 6, we tried to have the ASG module depend on the EFS ID, while the EFS module depended on the ASG Security Group ID. This created a loop where neither could be applied first.
+
+### The Solution: Decoupled Connectivity
+To break the loop, we shifted from **Security Group Chaining** (Least Privilege) to **CIDR-based Rules** (Functional Modularity).
+- **Standard:** Instead of allowing a specific SG, we allow the **Private Subnet CIDR** range. 
+- **Benefit:** This allows foundational storage (EFS, RDS) to be applied and tested independently of the compute cluster.
+
 ## SAA Exam Relevance: "Loosely Coupled"
-A core tenet of the AWS Well-Architected Framework is **Loose Coupling**. By breaking your infrastructure into layers, you can scale, secure, and evolve each part independently.
+A core tenet of the AWS Well-Architected Framework is **Loose Coupling**. By breaking your infrastructure into layers and managing dependencies carefully, you can scale, secure, and evolve each part independently.
