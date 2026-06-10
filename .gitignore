@@ -222,6 +222,11 @@ __marimo__/
 # Project Specific
 AWS SAA Practical Training.md
 GEMINI.md
+.antigravitycli/
+
+# Draw.io
+*.drawio.bkp
+.*.drawio.bkp
 
 # Terraform
 .terraform/

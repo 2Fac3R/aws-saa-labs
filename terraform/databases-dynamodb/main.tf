@@ -30,9 +30,17 @@ resource "aws_dynamodb_table" "lab_table" {
   # --- Global Secondary Index (GSI) ---
   global_secondary_index {
     name            = "StatusIndex"
-    hash_key        = "Status"
-    range_key       = "PK"
     projection_type = "ALL"
+
+    key_schema {
+      attribute_name = "Status"
+      key_type       = "HASH"
+    }
+
+    key_schema {
+      attribute_name = "PK"
+      key_type       = "RANGE"
+    }
   }
 
   # --- Time to Live (TTL) ---
