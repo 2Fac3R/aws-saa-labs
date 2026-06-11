@@ -17,6 +17,7 @@ Since this project uses a highly modularized approach, certain labs require othe
 | **10** | ECS + CI/CD | Lab 0, 2 | Needs VPC for Fargate and ALB. |
 | **11** | SQS | Lab 0 | Independent of VPC. |
 | **12** | SNS | Lab 0, 11 | Extends messaging module; SNS topic fans out to existing SQS queue. |
+| **13** | EventBridge | Lab 0, 1 | Independent of VPC. Uses S3 data bucket for Lambda code upload. |
 
 ## Cost Optimization Tip
 If you are destroying infrastructure to save costs, always keep **Lab 0 (Bootstrap)** alive. When moving to a specific phase, re-apply **Lab 2 (Networking)** first, as it is the most common dependency.
