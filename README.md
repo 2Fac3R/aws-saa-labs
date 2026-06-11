@@ -44,7 +44,7 @@ Defined in [GEMINI.md](./GEMINI.md), these principles guide every laboratory:
 
 ### Phase 6: Messaging & Integration
 - [x] **11. SQS** - Standard vs. FIFO queues, DLQs, and visibility timeouts.
-- [ ] **12. SNS** - Pub/Sub fan-out architectures.
+- [x] **12. SNS** - Pub/Sub fan-out architectures.
 - [ ] **13. EventBridge** - Event buses and scheduled jobs.
 
 ### Phase 7: Observability & Security

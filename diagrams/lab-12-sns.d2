@@ -1,0 +1,49 @@
+direction: right
+
+Client: Client {
+  shape: person
+}
+
+SNS: SNS Service {
+  style: { stroke: "#FF4F8B"; stroke-width: 2 }
+
+  Topic: SNS Topic {
+    label: "lab-orders"
+    style: { stroke: "#FF4F8B" }
+  }
+}
+
+SQS: SQS Service {
+  style: { stroke: "#FF9900"; stroke-width: 2 }
+
+  Standard: Standard Queue {
+    label: "lab-standard-queue"
+    style: { stroke: "#FF9900" }
+  }
+
+  StandardDLQ: Standard DLQ {
+    label: "lab-standard-dlq"
+    style: { stroke: "#FF4F8B" }
+  }
+
+  Standard -> StandardDLQ: Redrive (maxReceiveCount = 3) {
+    style: { stroke: "#FF4F8B"; stroke-width: 1; stroke-dash: 5 }
+  }
+}
+
+Email: Email Endpoint {
+  label: "Email Subscriber\n(optional)"
+  style: { stroke: "#00BCD4"; stroke-width: 2 }
+}
+
+Worker: Python Worker {
+  label: "Background Worker\n(Consumer)"
+  style: { stroke: "#3F7E44"; stroke-width: 2 }
+}
+
+Client -> SNS.Topic: 1. Publish Message (Order)
+SNS.Topic -> SQS.Standard: 2. Fan-out Leg A (SQS Subscription)
+SNS.Topic -> Email: 3. Fan-out Leg B (Email Subscription)
+
+Worker -> SQS.Standard: 4. Poll & Process (Long Polling)
+Worker -> SQS.Standard: 5. DeleteMessage (Ack)

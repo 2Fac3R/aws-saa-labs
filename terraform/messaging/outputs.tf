@@ -37,3 +37,17 @@ output "fifo_dlq_arn" {
   value       = aws_sqs_queue.fifo_dlq.arn
   description = "The ARN of the FIFO Dead Letter Queue"
 }
+
+# ==========================================
+# SNS Outputs (Lab 12)
+# ==========================================
+
+output "sns_topic_arn" {
+  value       = aws_sns_topic.lab_orders.arn
+  description = "The ARN of the lab-orders SNS topic"
+}
+
+output "sns_topic_name" {
+  value       = aws_sns_topic.lab_orders.name
+  description = "The name of the lab-orders SNS topic"
+}
