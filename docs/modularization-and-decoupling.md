@@ -13,6 +13,8 @@ In this project, we intentionally split our infrastructure into discrete, indepe
 - `terraform/databases-dynamodb`: Serverless NoSQL database.
 - `terraform/serverless-api`: Serverless compute and REST API Gateway.
 - `terraform/ecs-fargate-ci`: Container orchestration and CI/CD foundation.
+- `terraform/messaging`: Asynchronous decoupling with SQS and SNS.
+- `terraform/eventbridge`: Event-driven routing and automation.
 
 ## Why Decouple?
 

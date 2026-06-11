@@ -1,0 +1,29 @@
+direction: right
+
+Client: External System {
+  shape: person
+}
+
+Cloud: AWS {
+  EventBridge: EventBridge Bus {
+    label: "lab-custom-bus"
+    style: { stroke: "#FF4F8B"; stroke-width: 2 }
+    
+    Rule: Matching Rule {
+      style: { stroke-dash: 5 }
+    }
+  }
+
+  SQS: SQS Queue {
+    style: { stroke: "#FF9900" }
+  }
+
+  CW: CloudWatch {
+    label: "Scheduled Rule\n(Cron)"
+    style: { stroke: "#00BCD4" }
+  }
+}
+
+Client -> Cloud.EventBridge: PutEvents
+Cloud.EventBridge.Rule -> Cloud.SQS: Route matching events
+Cloud.CW -> Cloud.EventBridge: Trigger recurring event
