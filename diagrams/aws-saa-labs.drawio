@@ -1,4 +1,4 @@
-<mxfile host="Electron" pages="16">
+<mxfile host="Electron" pages="17">
   <diagram name="Lab 0 – Bootstrap" id="lab0">
     <mxGraphModel dx="1088" dy="702" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
@@ -782,6 +782,57 @@
             <Array as="points">
               <mxPoint x="90" y="550" />
               <mxPoint x="880" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Lab 16 – KMS &amp; Secrets" id="lab16">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="lab16-title" value="Lab 16 – KMS &amp; Secrets Manager: Envelope Encryption" style="text;html=1;fontSize=18;fontStyle=1;align=center;fillColor=none;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="200" y="20" width="760" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="lab16-user" value="Developer / App" style="shape=mxgraph.aws4.user;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="340" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="lab16-aws" value="AWS" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.group_aws_cloud_alt;strokeColor=#232F3E;fillColor=#FFFFFF;verticalLabelPosition=top;verticalAlign=bottom;align=center;html=1;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="100" width="880" height="600" as="geometry" />
+        </mxCell>
+        <mxCell id="lab16-kms" value="AWS KMS" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.kms;strokeColor=#FF9900;fillColor=#FFF3E0;verticalLabelPosition=top;verticalAlign=bottom;align=center;html=1;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="180" width="300" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="lab16-cmk" value="Customer Managed Key&#xa;alias/lab-key" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.kms;fillColor=#FF9900;strokeColor=#ffffff;fontColor=#ffffff;fontSize=11;fontStyle=1;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="370" y="320" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lab16-sm" value="AWS Secrets Manager" style="points=[[0,0],[0.25,0],[0.5,0],[0.75,0],[1,0],[1,0.25],[1,0.5],[1,0.75],[1,1],[0.75,1],[0.5,1],[0.25,1],[0,1],[0,0.75],[0,0.5],[0,0.25]];shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.secrets_manager;strokeColor=#FF4F8B;fillColor=#FFF0F6;verticalLabelPosition=top;verticalAlign=bottom;align=center;html=1;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="180" width="300" height="440" as="geometry" />
+        </mxCell>
+        <mxCell id="lab16-secret" value="App Secret&#xa;lab/app/secure-api-key" style="shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.secrets_manager;fillColor=#FF4F8B;strokeColor=#ffffff;fontColor=#ffffff;fontSize=11;fontStyle=1;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="820" y="320" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="lab16-e1" value="1. GetSecretValue" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" edge="1" source="lab16-user" target="lab16-secret" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="90" y="650" />
+              <mxPoint x="850" y="650" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lab16-e2" value="2. Decrypt (Envelope)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;" edge="1" source="lab16-sm" target="lab16-cmk" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lab16-e3" value="3. Plaintext Data Key" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;dashed=1;" edge="1" source="lab16-cmk" target="lab16-sm" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lab16-e4" value="4. Return JSON Secret" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;dashed=1;" edge="1" source="lab16-secret" target="lab16-user" parent="1">
+          <mxGeometry relative="1" as="geometry">
+             <Array as="points">
+              <mxPoint x="850" y="680" />
+              <mxPoint x="90" y="680" />
             </Array>
           </mxGeometry>
         </mxCell>

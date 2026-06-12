@@ -50,7 +50,7 @@ Defined in [GEMINI.md](./GEMINI.md), these principles guide every laboratory:
 ### Phase 7: Observability & Security
 - [x] **14. CloudWatch** - Metrics, Logs, Alarms, and Dashboards.
 - [x] **15. Auditing** - CloudTrail activity tracking and Athena log analysis.
-- [ ] **16. Key Management** - KMS (Envelope Encryption) and Secrets Manager.
+- [x] **16. Key Management** - KMS (Envelope Encryption) and Secrets Manager.
 - [ ] **17. Edge Security** - WAF and Shield basics.
 
 ### Phase 8: Optimization & Final Project

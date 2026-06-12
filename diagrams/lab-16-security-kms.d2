@@ -1,0 +1,28 @@
+direction: right
+
+User: Developer / App {
+  shape: person
+}
+
+Cloud: AWS {
+  SecretsManager: AWS Secrets Manager {
+    Secret: App Secret {
+      label: "lab/app/secure-api-key"
+      style: { stroke: "#FF4F8B" }
+    }
+    style: { stroke: "#FF4F8B"; stroke-width: 2 }
+  }
+
+  KMS: AWS KMS {
+    Key: Customer Managed Key {
+      label: "alias/lab-key"
+      style: { stroke: "#FF9900" }
+    }
+    style: { stroke: "#FF9900"; stroke-width: 2 }
+  }
+}
+
+User -> Cloud.SecretsManager.Secret: 1. GetSecretValue
+Cloud.SecretsManager -> Cloud.KMS.Key: 2. Decrypt (Envelope Encryption)
+Cloud.KMS.Key -> Cloud.SecretsManager: 3. Return Plaintext Data Key
+Cloud.SecretsManager.Secret -> User: 4. Returns JSON Secret
