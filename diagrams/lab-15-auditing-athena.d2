@@ -1,0 +1,28 @@
+direction: right
+
+Cloud: AWS {
+  API: Management Activity {
+    style: { stroke: "#333333" }
+  }
+
+  Auditing: CloudTrail {
+    style: { stroke: "#FF4F8B"; stroke-width: 2 }
+  }
+
+  Storage: S3 Bucket {
+    label: "cloudtrail-logs"
+    shape: cylinder
+    style: { stroke: "#3F7E44" }
+  }
+
+  Analysis: Amazon Athena {
+    style: { stroke: "#00BCD4"; stroke-width: 2 }
+  }
+}
+
+API -> Cloud.Auditing: Log API Calls
+Cloud.Auditing -> Cloud.Storage: Save JSON Logs
+Cloud.Analysis -> Cloud.Storage: Run SQL Queries
+
+User: Security Auditor { shape: person }
+User -> Cloud.Analysis: Audit Investigation

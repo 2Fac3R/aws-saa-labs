@@ -3,6 +3,12 @@
 ## Core Mandates
 * **IaC-First:** Every AWS resource MUST be created via Terraform. Manual console usage is for visualization and debugging only.
 * **Surgical Execution:** Follow the phases in `AWS SAA Practical Training.md` sequentially.
+* **Checklist for Finality:** A lab is only considered complete when:
+    1. **Code:** Terraform is fully applied and working.
+    2. **D2:** Architecture diagram is updated and rendered to SVG.
+    3. **Draw.io:** The master `.drawio` file has a new, stylized page for the lab.
+    4. **Docs:** Lab guide and CLI validation playbook are updated.
+    5. **README:** The lab is marked as completed in the main Roadmap.
 * **Dependency Management:** Favor **Loose Coupling** to prevent circular dependencies. If two modules depend on each other, break the loop by using broader network rules (e.g., VPC CIDRs) or a third "Link" module.
 * **Validation:** Every lab must be validated (e.g., via Python scripts, CLI commands, or connectivity tests).
 * **Architecture Documentation:** Update `diagrams/` or `docs/` when significant architectural changes are made.

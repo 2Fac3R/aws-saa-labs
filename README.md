@@ -48,8 +48,8 @@ Defined in [GEMINI.md](./GEMINI.md), these principles guide every laboratory:
 - [x] **13. EventBridge** - Event buses and scheduled jobs.
 
 ### Phase 7: Observability & Security
-- [ ] **14. CloudWatch** - Metrics, Logs, Alarms, and Dashboards.
-- [ ] **15. Auditing** - CloudTrail activity tracking and Athena log analysis.
+- [x] **14. CloudWatch** - Metrics, Logs, Alarms, and Dashboards.
+- [x] **15. Auditing** - CloudTrail activity tracking and Athena log analysis.
 - [ ] **16. Key Management** - KMS (Envelope Encryption) and Secrets Manager.
 - [ ] **17. Edge Security** - WAF and Shield basics.
 

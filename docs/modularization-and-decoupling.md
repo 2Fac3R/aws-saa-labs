@@ -16,6 +16,7 @@ In this project, we intentionally split our infrastructure into discrete, indepe
 - `terraform/messaging`: Asynchronous decoupling with SQS and SNS.
 - `terraform/eventbridge`: Event-driven routing and automation.
 - `terraform/observability`: Centralized monitoring and alerting.
+- `terraform/auditing-athena`: API auditing and log analysis with CloudTrail and Athena.
 
 ## Why Decouple?
 

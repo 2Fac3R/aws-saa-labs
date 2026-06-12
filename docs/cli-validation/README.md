@@ -19,6 +19,8 @@ Since this project uses a highly modularized approach, certain labs require othe
 | **12** | SNS | Lab 0, 11 | Pub/Sub fan-out (needs SQS for integration). |
 | **13** | EventBridge | Lab 0, 1 | Buses and Scheduled events. |
 | **14** | CloudWatch | Lab 0, 4, 12 | Needs ASG/ALB for metrics and SNS for alarms. |
+| **15** | CloudTrail & Athena | Lab 0 | Independent auditing and analysis layer. |
+| **16** | KMS & Secrets Manager | Lab 0 | Security foundation for encryption and secrets. |
 
 ## Cost Optimization Tip
 If you are destroying infrastructure to save costs, always keep **Lab 0 (Bootstrap)** alive. When moving to a specific phase, re-apply **Lab 2 (Networking)** first, as it is the most common dependency.
