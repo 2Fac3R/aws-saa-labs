@@ -1,0 +1,39 @@
+direction: right
+
+Cloud: AWS {
+  ASG: Auto Scaling Group {
+    style: { stroke: "#FF9900" }
+  }
+  
+  ALB: Application Load Balancer {
+    style: { stroke: "#FF9900" }
+  }
+
+  SNS: SNS Topic {
+    label: "lab-orders-topic"
+    style: { stroke: "#FF4F8B" }
+  }
+
+  Observability: CloudWatch {
+    style: { stroke: "#00BCD4"; stroke-width: 2 }
+
+    Dashboard: Dashboard {
+      label: "Visual Metrics"
+    }
+
+    Alarms: Metric Alarms {
+      label: "CPU > 80%\nALB 5XX Errors"
+    }
+
+    Logs: Log Group {
+      label: "/aws/app/lab-custom-events"
+    }
+  }
+}
+
+ASG -> Cloud.Observability.Alarms: Streams CPU Metrics
+ALB -> Cloud.Observability.Alarms: Streams Error Metrics
+Cloud.Observability.Alarms -> Cloud.SNS: 🔔 Triggers Notification
+
+User: Admin { shape: person }
+User -> Cloud.Observability.Dashboard: Monitors Health

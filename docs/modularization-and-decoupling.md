@@ -15,6 +15,7 @@ In this project, we intentionally split our infrastructure into discrete, indepe
 - `terraform/ecs-fargate-ci`: Container orchestration and CI/CD foundation.
 - `terraform/messaging`: Asynchronous decoupling with SQS and SNS.
 - `terraform/eventbridge`: Event-driven routing and automation.
+- `terraform/observability`: Centralized monitoring and alerting.
 
 ## Why Decouple?
 

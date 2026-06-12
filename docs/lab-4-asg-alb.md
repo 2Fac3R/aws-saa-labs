@@ -28,7 +28,7 @@ Consistent with the "Architect Way," the ASG instances fetch the FastAPI code fr
 ## Implementation Details
 - **ALB Type:** Internet-facing
 - **ASG Capacity:** Min: 2, Desired: 2, Max: 4
-- **Health Check Type:** ELB (checks target group health)
+- **Observability Outputs:** `alb_arn_suffix` (for CloudWatch) and `asg_name`.
 - **Subnets:** ALB in Public, ASG in Private
 
 ## SAA Exam Takeaways

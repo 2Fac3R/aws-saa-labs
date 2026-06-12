@@ -15,9 +15,10 @@ Since this project uses a highly modularized approach, certain labs require othe
 | **8** | DynamoDB | Lab 0 | Independent of VPC. |
 | **9** | Lambda + APIGW | Lab 0, 1, 8 | Uses Lab 1 S3 bucket for code and Lab 8 Table for data. |
 | **10** | ECS + CI/CD | Lab 0, 2 | Needs VPC for Fargate and ALB. |
-| **11** | SQS | Lab 0 | Independent of VPC. |
-| **12** | SNS | Lab 0, 11 | Extends messaging module; SNS topic fans out to existing SQS queue. |
-| **13** | EventBridge | Lab 0, 1 | Independent of VPC. Uses S3 data bucket for Lambda code upload. |
+| **11** | SQS | Lab 0 | Messaging foundation. |
+| **12** | SNS | Lab 0, 11 | Pub/Sub fan-out (needs SQS for integration). |
+| **13** | EventBridge | Lab 0, 1 | Buses and Scheduled events. |
+| **14** | CloudWatch | Lab 0, 4, 12 | Needs ASG/ALB for metrics and SNS for alarms. |
 
 ## Cost Optimization Tip
 If you are destroying infrastructure to save costs, always keep **Lab 0 (Bootstrap)** alive. When moving to a specific phase, re-apply **Lab 2 (Networking)** first, as it is the most common dependency.
